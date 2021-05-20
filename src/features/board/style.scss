@@ -1,0 +1,72 @@
+.board__title {
+  color: #4dabff;
+  background-color: #4a4a4a;
+  padding: 8px 0;
+  font-size: 33px !important;
+  margin-top: 24px !important;
+}
+
+.board__content {
+  border-top: 2px solid #4a4a4a;
+  padding-top: 12px;
+}
+
+.jooto-list {
+  background-color: #f9f7f5;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  padding: 5px 10px;
+
+  .list__title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .list__title-name {
+      font-size: 14px;
+      color: #56595d;
+      margin: 0;
+      .list__task-count {
+        color: #50acff;
+      }
+    }
+  }
+
+  .jooto__task-list {
+    .task-item {
+      margin-bottom: 10px;
+      background-color: #fff;
+      border-radius: 6px;
+      box-shadow: 1px 2px 1px 3px rgba(155,155,155,0.2);
+      padding: 5px 5px 5px 10px;
+      cursor: pointer;
+      word-break: break-word;
+      height: 95px;
+
+      .task-item__title {
+        font-size: 18px !important;
+      }
+    }
+  }
+}
+
+.box-add-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-color: #f9f7f5;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  height: 48px;
+
+  .box-add-list__button {
+    font-size: 14px;
+    color: #9b9b9b;
+    font-weight: 600;
+    background-color: #f9f7f5;
+    box-shadow: 1px 2px 1px 1px rgba(155, 155, 155, 0.2);
+    text-transform: none;
+    height: 100%;
+  }
+}
