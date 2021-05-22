@@ -1,9 +1,9 @@
 import React from 'react'
-import TaskList from './features/task_list/TaskList'
+import Board from './features/board/Board'
 
 function App() {
   return (
-    <TaskList />
+    <Board />
   )
 }
 
