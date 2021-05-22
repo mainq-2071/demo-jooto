@@ -1,33 +1,33 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice} from "@reduxjs/toolkit";
 
 const listSlice = createSlice({
-  name: 'lists',
+  name: "lists",
   initialState: {
-    value: [
-      {
-        id: 1,
-        name: 'Welcome to Jooto!',
-        color: '#FC78B9',
-        taskCount: 0
-      },
-      {
-        id: 2,
-        name: 'This is List',
-        color: '#36C398',
-        taskCount: 0
-      },
-      {
-        id: 3,
-        name: 'Edit List name',
-        color: '#4DABFF',
-        taskCount: 0
-      },
-    ],
+    value: [],
   },
   reducers: {
+    setLists: (state, action) => {
+      return {...state, value: [...action.payload]};
+    },
+    addList: (state, action) => {
+      return {...state, value: [action.payload, ...state.value]};
+    },
+    updateList: (state, action) => {
+      const lists = state.value.map((list) => {
+        if (list.id === action.payload.id) {
+          list = action.payload;
+        }
+        return lists;
+      });
+      return {...state, value: [...lists]};
+    },
+    destroyList: (state, action) => {
+      const lists = state.value.filter((list) => list.id !== action.payload.id);
+      return {...state, value: [...lists]};
+    },
   },
-})
+});
 
-export const { } = listSlice.actions
+export const {setLists, addList, updateList, destroyList} = listSlice.actions;
 
-export default listSlice.reducer
+export default listSlice.reducer;
