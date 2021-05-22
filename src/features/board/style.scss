@@ -34,11 +34,13 @@
   }
 
   .jooto__task-list {
+    margin-top: 10px;
+    
     .task-item {
       margin-bottom: 10px;
       background-color: #fff;
       border-radius: 6px;
-      box-shadow: 1px 2px 1px 3px rgba(155,155,155,0.2);
+      box-shadow: 1px 2px 1px 3px rgba(155, 155, 155, 0.2);
       padding: 5px 5px 5px 10px;
       cursor: pointer;
       word-break: break-word;
@@ -69,4 +71,11 @@
     text-transform: none;
     height: 100%;
   }
+}
+
+.box-add-task__button {
+  text-transform: none !important;
+  background-color: #fff !important;
+  font-weight: bold !important;
+  font-size: 16px !important;
 }

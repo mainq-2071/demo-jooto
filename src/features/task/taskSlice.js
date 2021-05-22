@@ -1,40 +1,33 @@
-import { createSlice } from '@reduxjs/toolkit'
+import {createSlice} from "@reduxjs/toolkit";
 
 const taskSlice = createSlice({
-  name: 'tasks',
+  name: "tasks",
   initialState: {
-    value: [
-      {
-        id: 1,
-        name: 'This is task',
-        list_id: 1
-      },
-      {
-        id: 2,
-        name: 'You can add a task asap!',
-        list_id: 1
-      },
-      {
-        id: 3,
-        name: 'You can write down detail of task',
-        list_id: 1
-      },
-      {
-        id: 4,
-        name: 'Move this task to next List!',
-        list_id: 2
-      },
-      {
-        id: 5,
-        name: 'List too!',
-        list_id: 2
-      },
-    ],
+    value: [],
   },
   reducers: {
+    setTasks: (state, action) => {
+      return {...state, value: [...action.payload]};
+    },
+    addTask: (state, action) => {
+      return {...state, value: [action.payload, ...state.value]};
+    },
+    updateTask: (state, action) => {
+      const tasks = state.value.map((task) => {
+        if (task.id === action.payload.id) {
+          task = action.payload;
+        }
+        return tasks;
+      });
+      return {...state, value: [...tasks]};
+    },
+    destroyTask: (state, action) => {
+      const tasks = state.value.filter((task) => task.id !== action.payload.id);
+      return {...state, value: [...tasks]};
+    },
   },
-})
+});
 
-export const { } = taskSlice.actions
+export const {setTasks, addTask, updateTask, destroyTask} = taskSlice.actions;
 
-export default taskSlice.reducer
+export default taskSlice.reducer;
