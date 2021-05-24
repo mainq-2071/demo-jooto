@@ -15,35 +15,10 @@ const Tasks = (props) => {
 
   const getTasks = async () => {
     try {
-      let tasks = [
-        {
-          id: 1,
-          name: 'This is task',
-          list_id: 1
-        },
-        {
-          id: 2,
-          name: 'You can add a task asap!',
-          list_id: 1
-        },
-        {
-          id: 3,
-          name: 'You can write down detail of task',
-          list_id: 1
-        },
-        {
-          id: 4,
-          name: 'Move this task to next List!',
-          list_id: 2
-        },
-        {
-          id: 5,
-          name: 'List too!',
-          list_id: 2
-        },
-      ]
-
-      dispatch(setTasks(tasks))
+      if (localStorage && localStorage.getItem('tasks')) {
+        let tasks = JSON.parse(localStorage.getItem('tasks'))
+        dispatch(setTasks(tasks))
+      }
     } catch (e) {
       console.log('errors: ', e)
     }
