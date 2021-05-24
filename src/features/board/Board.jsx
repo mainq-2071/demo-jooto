@@ -4,9 +4,12 @@ import { Container, Typography } from '@material-ui/core'
 import './style.scss'
 import Lists from './../list/Lists'
 import { setLists } from './../list/listSlice';
+import ListForm from './../list_form/ListForm';
+import { setOpenForm } from './../list_form/listFormSlice';
 
 const Board = () => {
   const lists = useSelector((state) => state.lists.value)
+  const isOpenListForm = useSelector((state) => state.listForm.isOpen)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -15,32 +18,21 @@ const Board = () => {
 
   const getLists = async () => {
     try {
-      let lists = [
-        {
-          id: 1,
-          name: 'Welcome to Jooto!',
-          color: '#FC78B9',
-          taskCount: 0
-        },
-        {
-          id: 2,
-          name: 'This is List',
-          color: '#36C398',
-          taskCount: 0
-        },
-        {
-          id: 3,
-          name: 'Edit List name',
-          color: '#4DABFF',
-          taskCount: 0
-        },
-      ]
-
-      dispatch(setLists(lists))
+      if (localStorage && localStorage.getItem('lists')) {
+        let lists = JSON.parse(localStorage.getItem('lists'))
+        dispatch(setLists(lists))
+      }
     } catch (e) {
       console.log('errors: ', e)
     }
   }
+
+  const handleClickOpen = () => {
+    dispatch(setOpenForm(true))
+  };
+  const handleClose = () => {
+    dispatch(setOpenForm(false))
+  };
 
   return (
     <Container>
@@ -52,8 +44,13 @@ const Board = () => {
       >
         Demo Jooto Board
       </Typography>
+      <ListForm
+        isOpenListForm={isOpenListForm}
+        handleClose={handleClose}
+      />
       <Lists
         lists={lists}
+        handleClickOpen={handleClickOpen}
       />
     </Container>
   )

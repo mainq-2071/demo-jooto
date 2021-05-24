@@ -10,6 +10,14 @@ const taskSlice = createSlice({
       return {...state, value: [...action.payload]};
     },
     addTask: (state, action) => {
+      let currentState = [...state.value];
+      action.payload.id = currentState.length + 1;
+
+      let tmpTasks = localStorage.getItem("tasks");
+      tmpTasks = tmpTasks ? JSON.parse(localStorage.getItem("tasks")) : [];
+      tmpTasks.unshift(action.payload);
+      localStorage.setItem("tasks", JSON.stringify(tmpTasks));
+
       return {...state, value: [action.payload, ...state.value]};
     },
     updateTask: (state, action) => {

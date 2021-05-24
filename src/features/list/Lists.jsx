@@ -4,19 +4,18 @@ import List from './List'
 import AddIcon from '@material-ui/icons/Add'
 
 const Lists = (props) => {
-  const { lists } = props
+  const { lists, handleClickOpen } = props
 
   const showLists = lists && lists.map((list, index) => {
     return (
-      <Grid
-        item
-        xs={3}
+      <Box
+        className='jooto-lists__box'
         key={index}
       >
         <List
           list={list}
         />
-      </Grid>
+      </Box>
     )
   })
 
@@ -24,14 +23,12 @@ const Lists = (props) => {
     <Box
       className='board__content'
     >
-      <Grid
-        container
-        spacing={2}
+      <Box
+        className='jooto-lists'
       >
         {showLists}
-        <Grid
-          item
-          xs={3}
+        <Box
+          className='jooto-lists__box'
         >
           <div
             className='box-add-list'
@@ -40,13 +37,14 @@ const Lists = (props) => {
               variant='contained'
               className='box-add-list__button'
               fullWidth
+              onClick={() => handleClickOpen()}
             >
               <AddIcon />
               <span>Add list</span>
             </Button>
           </div>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Box>
   )
 }

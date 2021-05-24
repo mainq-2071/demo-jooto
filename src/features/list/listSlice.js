@@ -10,7 +10,15 @@ const listSlice = createSlice({
       return {...state, value: [...action.payload]};
     },
     addList: (state, action) => {
-      return {...state, value: [action.payload, ...state.value]};
+      let currentState = [...state.value];
+      action.payload.id = currentState.length + 1;
+
+      let tmpLists = localStorage.getItem("lists");
+      tmpLists = tmpLists ? JSON.parse(localStorage.getItem("lists")) : [];
+      tmpLists.push(action.payload);
+      localStorage.setItem("lists", JSON.stringify(tmpLists));
+
+      return {...state, value: [...state.value, action.payload]};
     },
     updateList: (state, action) => {
       const lists = state.value.map((list) => {
