@@ -1,10 +1,20 @@
 import React from 'react'
 import Tasks from './../task/Tasks'
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import TaskForm from './../task_form/TaskForm';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
+import { Button } from '@material-ui/core';
+import { useDispatch } from 'react-redux'
+import { setAnchorEl,setCurrentListId } from '../list_anchor/listAnchorSlice';
 
 const List = (props) => {
   const { list } = props
+
+  const dispatch = useDispatch()
+
+  const handleClick = (event, listId) => {
+    dispatch(setAnchorEl(event.currentTarget));
+    dispatch(setCurrentListId(listId));
+  };
 
   const borderList = 'solid 10px ' + list.color
 
@@ -21,13 +31,11 @@ const List = (props) => {
         >
           <span>{list.name} </span>
         </h2>
-        <div
-          className='list__control'
+        <Button
+          onClick={(e) => handleClick(e, list.id)}
         >
-          <span>
-            <MoreHorizIcon />
-          </span>
-        </div>
+          <MoreHorizIcon />
+        </Button>
       </div>
       <TaskForm
         selectedListId={list.id}

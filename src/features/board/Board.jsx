@@ -6,6 +6,7 @@ import Lists from './../list/Lists'
 import { setLists } from './../list/listSlice';
 import ListForm from './../list_form/ListForm';
 import { setOpenForm } from './../list_form/listFormSlice';
+import ListAlertDialog from '../list_alert/ListAlertDialog';
 
 const Board = () => {
   const lists = useSelector((state) => state.lists.value)
@@ -48,6 +49,7 @@ const Board = () => {
         isOpenListForm={isOpenListForm}
         handleClose={handleClose}
       />
+      <ListAlertDialog />
       <Lists
         lists={lists}
         handleClickOpen={handleClickOpen}
