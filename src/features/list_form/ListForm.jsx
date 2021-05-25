@@ -3,7 +3,7 @@ import { Button, Dialog, DialogContent, DialogActions, Typography, TextField, Bo
 import ListFormTitle from './ListFormTitle';
 import { useSelector, useDispatch } from 'react-redux'
 import { handleChangeColor, handleChangeContent, handleValidForm } from './../list_form/listFormSlice';
-import { addList } from './../list/listSlice';
+import { addList, updateList } from './../list/listSlice';
 
 const colors = [
   {
@@ -36,8 +36,10 @@ const ListForm = (props) => {
   const { handleClose, isOpenListForm } = props
 
   const currentColor = useSelector((state) => state.listForm.color)
+  const listId = useSelector((state) => state.listForm.listId)
   const content = useSelector((state) => state.listForm.content)
   const isValidForm = useSelector((state) => state.listForm.isValidForm)
+  const isEditing = useSelector((state) => state.listForm.isEditing)
 
   const dispatch = useDispatch()
 
@@ -56,6 +58,16 @@ const ListForm = (props) => {
       color: currentColor
     }
     dispatch(addList(newList))
+    handleClose()
+  }
+
+  const handleUpdateList = () => {
+    let editList = {
+      name: content,
+      color: currentColor,
+      id: listId
+    }
+    dispatch(updateList(editList))
     handleClose()
   }
 
@@ -82,8 +94,8 @@ const ListForm = (props) => {
       <ListFormTitle
         onClose={handleClose}
       >
-        Add List
-        </ListFormTitle>
+        {isEditing ? 'Edit List' : 'Add List'}
+      </ListFormTitle>
       <DialogContent
         classes={{ root: 'list-form__content' }}
       >
@@ -117,17 +129,29 @@ const ListForm = (props) => {
         <Button
           color='primary'
           variant='outlined'
+          onClick={() => handleClose()}
         >
           <span>Cancel</span>
         </Button>
-        <Button
-          color='primary'
-          variant='contained'
-          disabled={!isValidForm}
-          onClick={() => handleCreateList()}
-        >
-          <span>Add</span>
-        </Button>
+        {isEditing ? (
+          <Button
+            color='secondary'
+            variant='contained'
+            disabled={!isValidForm}
+            onClick={() => handleUpdateList()}
+          >
+            <span>Update</span>
+          </Button>
+        ) : (
+          <Button
+            color='primary'
+            variant='contained'
+            disabled={!isValidForm}
+            onClick={() => handleCreateList()}
+          >
+            <span>Add</span>
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

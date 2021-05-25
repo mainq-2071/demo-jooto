@@ -11,7 +11,18 @@ const listSlice = createSlice({
     },
     addList: (state, action) => {
       let currentState = [...state.value];
-      action.payload.id = currentState.length + 1;
+
+      let lastId =
+        currentState.length > 0
+          ? Math.max.apply(
+              Math,
+              currentState.map(function (item) {
+                return item.id;
+              })
+            )
+          : 0;
+
+      action.payload.id = lastId + 1;
 
       let tmpLists = localStorage.getItem("lists");
       tmpLists = tmpLists ? JSON.parse(localStorage.getItem("lists")) : [];
@@ -21,16 +32,27 @@ const listSlice = createSlice({
       return {...state, value: [...state.value, action.payload]};
     },
     updateList: (state, action) => {
-      const lists = state.value.map((list) => {
+      let lists = state.value.map((list) => {
         if (list.id === action.payload.id) {
           list = action.payload;
         }
-        return lists;
+        return list;
       });
+
+      localStorage.setItem("lists", JSON.stringify(lists));
+
       return {...state, value: [...lists]};
     },
     destroyList: (state, action) => {
-      const lists = state.value.filter((list) => list.id !== action.payload.id);
+      let lists = state.value.filter((list) => list.id !== action.payload);
+
+      let tmpTasks = localStorage.getItem("tasks");
+      tmpTasks = tmpTasks ? JSON.parse(localStorage.getItem("tasks")) : [];
+
+      let tasks = tmpTasks.filter((item) => item.list_id !== action.payload);
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+
+      localStorage.setItem("lists", JSON.stringify(lists));
       return {...state, value: [...lists]};
     },
   },

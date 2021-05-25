@@ -48,7 +48,7 @@
       cursor: pointer;
       word-break: break-word;
       height: 95px;
-      box-shadow: 1px 2px 1px 1px rgba(155,155,155,0.2);
+      box-shadow: 1px 2px 1px 1px rgba(155, 155, 155, 0.2);
 
       .task-item__title {
         font-size: 18px !important;
@@ -142,6 +142,15 @@
 
   .list-form__content {
     border: none;
+
+    .destroy-form__title {
+      text-align: center;
+      padding: 50px 0 35px;
+      color: #4a4a4a;
+      line-height: 1.29;
+      word-break: break-word;
+      font-size: 16px;
+    }
 
     .list-form__input {
       margin-top: 30px;
