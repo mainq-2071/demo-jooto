@@ -17,12 +17,18 @@ const taskSlice = createSlice({
           ? Math.max.apply(
               Math,
               currentState.map(function (item) {
-                return item.id;
+                return parseInt(item.id.split("-")[1]);
               })
             )
           : 0;
 
-      action.payload.id = lastId + 1;
+      let tmpLists = JSON.parse(localStorage.getItem("lists"));
+      let currentList = tmpLists.find(
+        (item) => item.id === action.payload.list_id
+      );
+
+      action.payload.id = "task-" + (lastId + 1);
+      action.payload.offset = currentList.tasksCount;
 
       let tmpTasks = localStorage.getItem("tasks");
       tmpTasks = tmpTasks ? JSON.parse(localStorage.getItem("tasks")) : [];
@@ -36,8 +42,9 @@ const taskSlice = createSlice({
         if (task.id === action.payload.id) {
           task = action.payload;
         }
-        return tasks;
+        return task;
       });
+      localStorage.setItem("tasks", JSON.stringify(tasks));
       return {...state, value: [...tasks]};
     },
     destroyTask: (state, action) => {

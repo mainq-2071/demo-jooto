@@ -3,9 +3,15 @@ import { Box, Button } from '@material-ui/core'
 import List from './List'
 import AddIcon from '@material-ui/icons/Add'
 import ListAnchorEl from '../list_anchor/ListAnchorEl';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateTask } from './../task/taskSlice';
 
 const Lists = (props) => {
   const { lists, handleClickOpen } = props
+  const tasks = useSelector((state) => state.tasks.value)
+
+  const dispatch = useDispatch()
 
   const showLists = lists && lists.map((list, index) => {
     return (
@@ -20,31 +26,58 @@ const Lists = (props) => {
     )
   })
 
+  const onDragEnd = result => {
+    const { destination, source, draggableId } = result
+
+    if (!destination) {
+      return
+    }
+
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+      return
+    }
+
+    let draggableTask = tasks.find(item => item.id === draggableId)
+    let newOffset = draggableTask.offset + (source.index - destination.index)
+
+    let destinationTask = tasks.find(item => item.offset === newOffset)
+
+    let sourceTask = { ...draggableTask, offset: newOffset }
+    destinationTask = { ...destinationTask, offset: draggableTask.offset }
+
+    dispatch(updateTask(sourceTask))
+    dispatch(updateTask(destinationTask))
+  }
+
   return (
     <Box
       className='board__content'
     >
-      <Box
-        className='jooto-lists'
+      <DragDropContext
+        onDragEnd={onDragEnd}
       >
-        {showLists}
         <Box
-          className='jooto-lists__box'
+          className='jooto-lists'
         >
-          <div
-            className='box-add-list'
-          >
-            <Button
-              variant='contained'
-              className='box-add-list__button'
-              fullWidth
-              onClick={() => handleClickOpen()}
-            >
-              <AddIcon />
-              <span>Add list</span>
-            </Button>
-          </div>
+          {showLists}
         </Box>
+      </DragDropContext>
+      <Box
+        className='jooto-lists__box'
+      >
+        <div
+          className='box-add-list'
+        >
+          <Button
+            variant='contained'
+            className='box-add-list__button'
+            fullWidth
+            onClick={() => handleClickOpen()}
+          >
+            <AddIcon />
+            <span>Add list</span>
+          </Button>
+        </div>
       </Box>
       <ListAnchorEl />
     </Box>

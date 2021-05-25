@@ -55,7 +55,7 @@ const ListForm = (props) => {
   const handleCreateList = () => {
     let newList = {
       name: content,
-      color: currentColor
+      color: currentColor,
     }
     dispatch(addList(newList))
     handleClose()
