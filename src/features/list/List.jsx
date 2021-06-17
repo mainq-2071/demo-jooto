@@ -4,7 +4,7 @@ import TaskForm from './../task_form/TaskForm';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz'
 import { Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux'
-import { setAnchorEl,setCurrentListId } from '../list_anchor/listAnchorSlice';
+import { setAnchorEl, setCurrentListId } from '../list_anchor/listAnchorSlice';
 
 const List = (props) => {
   const { list } = props
@@ -30,6 +30,7 @@ const List = (props) => {
           className='list__title-name'
         >
           <span>{list.name} </span>
+          <span className='list__task-count'>{list.tasksCount}</span>
         </h2>
         <Button
           onClick={(e) => handleClick(e, list.id)}

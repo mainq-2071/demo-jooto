@@ -17,12 +17,13 @@ const listSlice = createSlice({
           ? Math.max.apply(
               Math,
               currentState.map(function (item) {
-                return item.id;
+                return parseInt(item.id.split("-")[1]);
               })
             )
           : 0;
 
-      action.payload.id = lastId + 1;
+      action.payload.id = "list-" + (lastId + 1);
+      action.payload.tasksCount = 0
 
       let tmpLists = localStorage.getItem("lists");
       tmpLists = tmpLists ? JSON.parse(localStorage.getItem("lists")) : [];
